@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/txtFrase"
+        android:layout_width="299dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="86dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="51dp"
+        android:ems="10"
+        android:hint="Escribe una frase"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/btnSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="192dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="109dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginEnd="110dp"
+        android:layout_marginBottom="501dp"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFrase" />
+
+    <TextView
+        android:id="@+id/lbFrase"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="298dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="408dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

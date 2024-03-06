@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference refPersona; //referencia al objeto persona!
     private ArrayList<Persona> personas;
     private DatabaseReference refPersonas;
+    private DatabaseReference miListaPersonas;
+    private ArrayList<Persona> listaPersonas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
         //lista personas
         personas = new ArrayList<>();
+        listaPersonas = new ArrayList<>();
         crearPersonas();
         refPersonas = database.getReference("personas");
+        miListaPersonas = database.getReference("personas");
 
         refFrase = database.getReference("frase");
         //A la referencia debemos agregar el valueEventlistener para q este pendiente de los cambios en la bd para leerlos
@@ -119,6 +126,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        //para hacer una carga de datos inicial / una sola escucha se usa get
+
+        miListaPersonas.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()){ //si da error
+                    Log.e("firebase", "Error al traer los datos", task.getException());
+                    Toast.makeText(MainActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                }else {
+                    GenericTypeIndicator<ArrayList<Persona>> gti = new GenericTypeIndicator<ArrayList<Persona>>() {
+                    };
+                    ArrayList<Persona> aux = task.getResult().getValue(gti); //guarda la listta de obj
+                    if (aux != null) { //si no es null la añade al arraylist
+                        Toast.makeText(MainActivity.this, "Auxiliar:"+aux.size(), Toast.LENGTH_SHORT).show();
+                        listaPersonas.addAll(aux);
+                    }
+                }
+            }
+        });
     }
 
     private void crearPersonas(){
